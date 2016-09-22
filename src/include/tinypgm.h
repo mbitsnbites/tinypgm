@@ -28,11 +28,19 @@
 #ifndef TPGM_TINYPGM_H
 #define TPGM_TINYPGM_H
 
+/**
+* @file tinypgm.h
+* @brief Interface declaration for the tinypgm library.
+*
+* @mainpage
+* See tinypgm.h for the full API documentation.
+*/
+
+#include <stddef.h> /* For size_t */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <stddef.h> /* For size_t */
 
 /**
 * @brief Return value for all tinypgm library functions.
