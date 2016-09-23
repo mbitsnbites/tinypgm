@@ -13,6 +13,7 @@ elseif("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /WX")
 endif()
 
+add_subdirectory(doc)
 add_subdirectory(src)
 add_subdirectory(test)
 
