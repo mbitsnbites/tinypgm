@@ -86,15 +86,19 @@ tpgm_status_t tpgm_load_data(const char* file_name,
 * @brief Save image data to a file.
 * @param file_name Name of the file to save (UTF-8).
 * @param data A byte array holding the image data. The size of the data array
-* must be width * height bytes.
+* must be stride * height bytes.
 * @param width Image width.
 * @param height Image height.
+* @param stride Number of bytes per row (including padding). If zero (0), the
+* @c width argument will be used as stride (assuming that rows are tightly
+* packed in memory).
 * @returns TPGM_OK on success, else TPGM_FAIL.
 */
 tpgm_status_t tpgm_save(const char* file_name,
                         const void* data,
                         int width,
-                        int height);
+                        int height,
+                        int stride);
 
 #ifdef __cplusplus
 } /* extern "C" */

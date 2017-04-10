@@ -193,9 +193,17 @@ tpgm_status_t tpgm_load_data(const char* file_name,
 tpgm_status_t tpgm_save(const char* file_name,
                         const void* data,
                         int width,
-                        int height) {
+                        int height,
+                        int stride) {
   FILE* fp;
-  size_t data_size, bytes_written;
+  const char* data_ptr;
+  size_t bytes_written;
+  int k;
+
+  /* If the stride is not given, it should be the same as the width. */
+  if (stride <= 0) {
+    stride = width;
+  }
 
   /* Check input arguments. */
   if (file_name == NULL || data == NULL) {
@@ -203,7 +211,7 @@ tpgm_status_t tpgm_save(const char* file_name,
   }
 
   /* Sanity check of the image dimensions. */
-  if (width < 1 || height < 1) {
+  if (width < 1 || height < 1 || stride < width) {
     return TPGM_FAIL;
   }
 
@@ -217,11 +225,14 @@ tpgm_status_t tpgm_save(const char* file_name,
   fprintf(fp, "P5\n# Created by tinypgm\n%d %d\n%d\n", width, height, 255);
 
   /* Save the data to the file. */
-  data_size = (size_t)width * (size_t)height;
-  bytes_written = fwrite(data, 1, data_size, fp);
-  if (bytes_written != data_size) {
-    fclose(fp);
-    return TPGM_FAIL;
+  data_ptr = (const char*)data;
+  for (k = 0; k < height; ++k) {
+    bytes_written = fwrite(data_ptr, 1, (size_t)width, fp);
+    if (bytes_written != (size_t)width) {
+      fclose(fp);
+      return TPGM_FAIL;
+    }
+    data_ptr += stride;
   }
 
   /* Close the image file. */

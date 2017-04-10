@@ -91,7 +91,7 @@ int main() {
   /* ... */
 
   /* Save the image data. */
-  if (!tpgm_save_data(MY_PGM_FILE, data, IMAGE_WIDTH, IMAGE_HEIGHT)) {
+  if (!tpgm_save_data(MY_PGM_FILE, data, IMAGE_WIDTH, IMAGE_HEIGHT, 0)) {
     fprintf(stderr, "Failed to save the image data.\n");
     free(data);
     return 1;
